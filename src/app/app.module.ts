@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
+
+import { RollbarService, RollbarErrorHandler, rollbarFactory } from './rollbar';
 
 import { AppComponent } from './app.component';
 
@@ -10,7 +12,17 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+		{
+			provide: ErrorHandler,
+			useClass: RollbarErrorHandler
+		},
+		{
+				provide: RollbarService,
+				useFactory: rollbarFactory
+		},
+	],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
